@@ -34,7 +34,7 @@ class DList:
 
         self.__array_memory = new_array_memory
 
-    def add(self, item: any) -> list: # Сложность алгоритма O(1) / O(N)
+    def add(self, item: any) -> bool: # Сложность алгоритма O(1) / O(N)
         """
         Добавляет элемент в начало списка
         :param item: Пренимает итем для добавления
@@ -47,9 +47,9 @@ class DList:
         self.__array_memory[self.__count] = item
         self.__count += 1
 
-        return self.__array_memory
+        return True
 
-    def add_front(self, item: any) -> list or Exception: # Сложность алгоритма O(N)
+    def add_front(self, item: any) -> bool or Exception: # Сложность алгоритма O(N)
         """
         Добавляет элемент в начало списка
         :param item: Пренимает итем для добавления
@@ -67,9 +67,9 @@ class DList:
 
         self.__array_memory[0] = item
 
-        return self.__array_memory
+        return True
 
-    def remove(self, item: any) -> list or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
+    def remove(self, item: any) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
         """
         Удаляяет первое вхождение элемента item. Если данного элемента в списке нет, породить исключение ValueError()
         :param item: Пренимает элемент поиска
@@ -86,9 +86,9 @@ class DList:
 
         self.__count -= 1
 
-        return self.__array_memory
+        return True
 
-    def remove_of_index(self, index: int) -> list or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
+    def remove_of_index(self, index: int) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
         """
          Удаляет элемент по индексу. если индекс выходит за допустимые границы, породить исключение ValueError()
         :param index: Пренимает индекс удаляемого элемента
@@ -104,7 +104,7 @@ class DList:
 
         self.__count -= 1
 
-        return self.__array_memory
+        return True
 
     def find(self, item: any) -> int: # Сложность алгоритма O(1) / O(N) / O(N)
         """
@@ -118,7 +118,7 @@ class DList:
             if self.__array_memory[i] == item:
                 return i
 
-    def insert_of_index(self, item: any, index: int) -> list or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
+    def insert_of_index(self, item: any, index: int) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
         """
         Вставляет элемент item на позицию index (происходит циклический сдвиг вправо)
         :param item: Пренимает элемент
@@ -144,9 +144,9 @@ class DList:
         self.__array_memory[index] = item
         self.__count += 1
 
-        return self.__array_memory
+        return True
 
-    def revert(self) -> list or Exception:
+    def revert(self) -> bool or Exception:
         """
         Выполняет реверс ячеек массива, заполненных элементами
         :return: Возвращает реверсированный массив
@@ -157,9 +157,9 @@ class DList:
 
             self.__array_memory[i], self.__array_memory[self.__count-i-1] = self.__array_memory[self.__count-i-1], self.__array_memory[i]
 
-        return self.__array_memory
+        return True
 
-    def sort(self, condition=lambda x, y: x < y) -> list or Exception:
+    def sort(self, condition=lambda x, y: x < y) -> bool or Exception:
         """
         Выполняет сортировку массива исходя из заданных параметров, которые устанавливает lambda функция
         :param condition: Пренимает lambda функцию
@@ -176,8 +176,8 @@ class DList:
 
             self.__array_memory[i], self.__array_memory[index_min] = self.__array_memory[index_min], self.__array_memory[i]
 
-        return self.__array_memory
-    
+        return True
+
     def count_item(self, item: any) -> int or Exception:
         """
         Выполняет подсчет количества вхождений, переданного в метод, элемента

@@ -3,8 +3,8 @@ class Node:
         """
         Формирует фобьект node
         """
-        self.data = data
-        self.prev = None
+        self.data = data  # Данные, которые хранятся в ноде
+        self.prev = None  # Ссылка на предыдущую ноду
 
 
 class Stack:
@@ -12,10 +12,10 @@ class Stack:
         """
         Формирует объект Stack
         """
-        self.__count = 0
-        self.__top = None
+        self.__count = 0  # Количество элементов в стэке
+        self.__top = None  # Указатель, указывает на элемент, находящийся на вершине стэка
 
-    def push(self, item: Node) -> None:
+    def push(self, item) -> None:
         """
         Добавляет объект node в стэк
         :param item: Пренимает node
@@ -35,7 +35,7 @@ class Stack:
         self.__top = self.__top.prev
         self.__count -= 1
 
-    def peeck(self):
+    def peek(self):
         """
         :return: Возвращает ноду, на которую указывает указатель __top
         """
@@ -58,4 +58,16 @@ class Stack:
 
 
 
+class Program:
+    @staticmethod
+    def main():
 
+
+        stack = Stack()
+        stack.push(78)
+        print(stack.peek())
+
+
+
+
+Program.main()
