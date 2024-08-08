@@ -177,6 +177,7 @@ class DList:
             self.__array_memory[i], self.__array_memory[index_min] = self.__array_memory[index_min], self.__array_memory[i]
 
         return self.__array_memory
+    
     def count_item(self, item: any) -> int or Exception:
         """
         Выполняет подсчет количества вхождений, переданного в метод, элемента
@@ -194,7 +195,6 @@ class DList:
                 count_entry += 1
 
         return count_entry
-
 
     def is_empty(self) -> bool: # Сложность алгоритма O(1)
         """
@@ -218,20 +218,3 @@ class DList:
 
     size = property(__get_size)
 
-
-class Program:
-    @staticmethod
-    def main():
-        d_list = DList(5)
-        d_list.add(9)
-        d_list.add(2)
-        d_list.add(4)
-        d_list.add(1)
-        d_list.add(3)
-
-        print(d_list.count)
-        print(d_list.array)
-        d_list.sort(condition=lambda x, y: x > y)
-        print(d_list.array)
-
-Program.main()
