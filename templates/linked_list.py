@@ -38,7 +38,7 @@ class LinkedList:
         while not (iterator.next is None):  # В цикле обходим все ссылки next до тех пор пока одна из них не будет ссылаться на None
             iterator = iterator.next  # При каждой итерации текущему итератору присваиваем значение ссылки последующего
 
-        iterator.next = node  # Как только мы нашли ссылку, которая ссылается на None то присваиваем ей новую ноду таким образом образуем связь между новой нодой и предыдущей
+        iterator.next = node  # Как только мы нашли ссылку, которая ссылается на None то присваиваем ей новую ноду таким образом образуем связь между предыдущей нодой, котоая была последней и новой нодой, которая стала последней
 
     def add_front(self, item: any) -> bool or Exception:
         """
@@ -52,11 +52,12 @@ class LinkedList:
 
         if self.__count == 1:
             self.__head = node  # __head присваиваем ссылку на новую ноду
-            return
+            return True
 
         node.next = self.__head  # Берем ссылку новой ноды, которую нам нужно поставить на 1 позицию и присваиваем ей __head, а так как __head содержит ссылку на предыдущую ноду, которая была первой, то получается мы новой ноде присвоили предыдущую первую
 
         self.__head = node  # Затем мы хеду присваиваем новую ноду, теперь она первая в списке
+        return True
 
     def insert_of_position(self, item: any, position: int) -> bool or Exception:
         """
@@ -64,7 +65,9 @@ class LinkedList:
         :param position: Пренимает position, на который нужно добавить ноду
         :return: bool or Exception
         """
-        if self.__count == 0: self.add_back(item)  # Если список пуст то нет возможности добавить ноду на определенную позицию, поэтому просто добавляем через add_back
+        if self.__count == 0:
+            self.add_back(item)  # Если список пуст то нет возможности добавить ноду на определенную позицию, поэтому просто добавляем через add_back
+            return True
 
         node = Node(item)  # Создаем ноду
 
@@ -113,20 +116,20 @@ class LinkedList:
             iterator = iterator.next  # iterator присваиваем значение следующей ноды по ссылке next
 
             if iterator.data == item:  # Каждую итерацию цикла значения итератов меняются потому, что по ссылкам они переходят к следующим нодам и происходит проверка данных, если данные в ноде совпадают с искомыми
-                iterator_prev = iterator.next  # То iterator_prev через ссылку next присваивается следующая нода по отношению к iterator, таким образом ссылка на ноду, на которой находится итератор (и данные которой совпали с искомыми) пропадает и нода удаляется
+                iterator_prev.next = iterator.next  # То iterator_prev через ссылку next присваивается следующая нода по отношению к iterator, таким образом ссылка на ноду, на которой находится итератор (и данные которой совпали с искомыми) пропадает и нода удаляется
                 self.__count -= 1
                 return True
 
         return False
 
-    def clear(self):
+    def __clear(self):
         """
         Очищает всю структуру данных
         :return:
         """
         self.__head = None
 
-    def peek(self):
+    def __peek(self):
         """
         :return: Возвращает ноду, на которую указывает указатель __head
         """
@@ -139,4 +142,14 @@ class LinkedList:
         """
         return self.__count
 
+    def __is_empty(self):
+        """
+        :return:  Возвращает true, если список пуст, иначе false
+        """
+        return True if self.__count == 0 else False
+
+    peek = property(__peek)
+    clear = property(__clear)
     count = property(__count)
+    empty = property(__is_empty)
+
