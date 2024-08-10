@@ -41,13 +41,13 @@ class PrintQueue:
         """
         assert self.__count != 0, ValueError('Очередь пуста, удалять нечего, для начала добавьте документы в нее')
 
-        one_doc = self.__head
+        current_doc = self.__head
 
         self.__head = self.__head.prev
 
         self.__count -= 1
 
-        return one_doc
+        return current_doc
 
     def __peek(self):
         """
