@@ -47,7 +47,7 @@ class PrintQueue:
 
         if self.__count == 1:
             self.__head = None
-            
+
         self.__count -= 1
 
         return current_doc
