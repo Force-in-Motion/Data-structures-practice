@@ -35,12 +35,12 @@ class PersonList:
         Добавляет новую карточку персоны в конец списка
         :return: bool or Exeption
         """
+        self.__count += 1
 
-        if self.__count == 0:
+        if self.__count == 1:
             self.add_person(name, age, occupation)
             return True
 
-        self.__count += 1
 
         node = PersonCard(name, age, occupation)
 
@@ -57,12 +57,12 @@ class PersonList:
         Добавляет новую карточку персоны на указанную позицию
         :return: bool or Exeption
         """
+        self.__count += 1
 
-        if self.__count == 0 or position == 1:
+        if self.__count == 1 or position == 1:
             self.add_person(name, age, occupation)
             return True
 
-        self.__count += 1
 
         node = PersonCard(name, age, occupation)
 
@@ -108,6 +108,7 @@ class PersonList:
 
         if iterator.next == None:
             result_node = iterator
+            iterator = None
             self.__count -= 1
 
             return result_node
@@ -133,8 +134,11 @@ class PersonList:
             if iterator.name == name:
                 required_node = iterator
                 iterator_prev.next = iterator.next
+                self.__count -= 1
 
                 return required_node
+
+            return False
 
     def __peek(self):
         """
