@@ -15,7 +15,7 @@ class Stack:
         self.__count = 0  # Количество элементов в стэке
         self.__top = None  # Указатель, указывает на элемент, находящийся на вершине стэка
 
-    def push(self, item) -> bool:
+    def push(self, item) -> None:
         """
         Добавляет объект node в стэк
         :param item: Пренимает node
@@ -30,12 +30,14 @@ class Stack:
         self.__top = node
         self.__count += 1
 
-    def pop(self) -> bool:
+    def pop(self) -> None:
         """
         Удаляет объект node из стек путем переноса указателя __top на предыдущую ноду, то есть ссылка на текущую ноду теряется и указатель __top теперь ссылается на предыдущую
         А так как объект живет пока на него есть хоть одна ссылка, а ссылки на верхний элемент теперь нет, поэтому он удаляется из стэка
         :return: None
         """
+        assert self.__count != 0, ValueError('Удлять нечего')
+
         self.__top = self.__top.prev
         self.__count -= 1
 
@@ -58,20 +60,6 @@ class Stack:
         return self.__count
 
     count = property(__get_count)
+    top = property(peek)
 
 
-
-
-class Program:
-    @staticmethod
-    def main():
-
-
-        stack = Stack()
-        stack.push(78)
-        print(stack.peek())
-
-
-
-
-Program.main()

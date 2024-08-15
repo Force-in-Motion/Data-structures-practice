@@ -124,12 +124,12 @@ class LinkedList:
         while not (iterator.next is None):  # В цикле обходим все ссылки next до тех пор пока одна из них не будет ссылаться на None
             iterator = iterator.next  # При каждой итерации текущему итератору присваиваем значение ссылки последующего
 
-        if iterator.next == None:  # При каждой итерации тыкла проверяем это условие, когда наступает случай при котором ссылка итератора ссылается на None мы заходим в блок кода
-            result_node = iterator  # Создаем локальную переменную и присваиваем ей значение итератора
-            iterator = None
-            self.__count -= 1  #
+            if iterator.next == None:  # При каждой итерации цикла проверяем это условие, когда наступает случай при котором ссылка итератора ссылается на None мы заходим в блок кода
+                result_node = iterator  # Создаем локальную переменную и присваиваем ей значение итератора, чтобы сохранить и затем вернуть удаляемую ноду
+                iterator = None
+                self.__count -= 1  #
 
-            return result_node, iterator
+                return result_node
 
     def remove_node_for_data(self, data) -> Node or Exception:
         """
@@ -145,7 +145,7 @@ class LinkedList:
         iterator = self.__head  # Создаем итератор и присваиваем ему значение головы, то есть первую ноду
         iterator_prev = None  # Создаем итератор прев и присваиваем ему значение None
 
-        while iterator.data != data and not iterator.next is None:  # Если искомый элемент не в первой ноде то в цикле перебираем ссылки, пока не найдется нода с нужными данными
+        while iterator.data != data and not (iterator.next is None):  # Если искомый элемент не в первой ноде то в цикле перебираем ссылки, пока не найдется нода с нужными данными
             iterator_prev = iterator  # Присваиваем iterator_prev значение iterator, то есть сейчас они оба ссылаются на первую ноду
             iterator = iterator.next  # iterator присваиваем значение следующей ноды по ссылке next
 
@@ -158,6 +158,24 @@ class LinkedList:
 
             return False  # Если полученный данные не были найдены ни в одной ноде то вернем False
 
+    def find(self, item) -> bool:
+        """
+        Обходит всесь список путем присвоению текущему итератору следующего элемента списка через ссылку next и проверяет совпадают ли хранящиеся в элементах данные с полученными, если совпадают то вернет True если обойдя весь список совпадений не найдется, то вернет False
+        :param item: Пренимает данные для поиска
+        :return: bool
+        """
+        assert self.__count != 0, ValueError('Список пуст, искать нечего')
+
+        iterator = self.__head
+
+        while iterator.data != item and not (iterator.next is None):
+            iterator = iterator.next
+
+            if iterator.data == item:
+                return True
+
+        return False
+
     def __clear(self):
         """
         Очищает всю структуру данных
@@ -169,7 +187,7 @@ class LinkedList:
         """
         :return: Возвращает ноду, на которую указывает указатель __head
         """
-        return self.__head.data
+        return self.__head
 
     def __count(self) -> int:
         """

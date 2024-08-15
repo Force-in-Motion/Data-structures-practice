@@ -34,9 +34,9 @@ class DList:
 
         self.__array_memory = new_array_memory
 
-    def add(self, item: any) -> bool: # Сложность алгоритма O(1) / O(N)
+    def add_back(self, item: any) -> bool: # Сложность алгоритма O(1) / O(N)
         """
-        Добавляет элемент в начало списка
+        Добавляет элемент в конец списка
         :param item: Пренимает итем для добавления
         :return: None
         """
@@ -56,7 +56,7 @@ class DList:
         :return: None
         """
         if self.__count == 0:
-            self.add(item)
+            self.add_back(item)
             return True
 
         if self.__count == self.__size:
@@ -67,15 +67,49 @@ class DList:
 
         self.__array_memory[0] = item
 
+        self.__count += 1
+
         return True
 
-    def remove(self, item: any) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
+    def remove_back(self) -> bool or Exception: # Сложность алгоритма O(1)
+        """
+        Удаляет последний элемент
+        :return:
+        """
+        assert self.__count != 0, ValueError('Список пуст, удалять нечего')
+
+        self.__array_memory[self.__count-1] = None
+
+        return True
+
+    def remove_front(self) -> bool or Exception: # Сложность алгоритма O(1) / O(N)
+        """
+        Удаляет первый элемент списка
+        :return:
+        """
+        assert self.__count != 0, ValueError('Список пуст, удалять нечего')
+
+        self.__array_memory[0] = None
+
+        if self.__count == 1:
+            return True
+
+        for i in range(0, self.__count, 1):
+            self.__array_memory[i], self.__array_memory[i+1] = self.__array_memory[i+1], self.__array_memory[i]
+
+            return True
+
+    def remove_of_data(self, item: any) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
         """
         Удаляяет первое вхождение элемента item. Если данного элемента в списке нет, породить исключение ValueError()
         :param item: Пренимает элемент поиска
         :return: True или ValueError
         """
         assert item in self.__array_memory, ValueError('В массиве нет такого элемента')
+
+        if self.__count == 1:
+            self.remove_front()
+            return True
 
         for i in range(0, self.__count, 1):
 
@@ -112,13 +146,13 @@ class DList:
         :param item: Пренимает элемент поиска
         :return: Если элемент найден, вернуть его индекс, иначе -1
         """
-        if item not in self.__array_memory: return -1
+        assert item in self.__array_memory, ValueError('В массиве нет такого элемента')
 
         for i in range(0, self.__count, 1):
             if self.__array_memory[i] == item:
                 return i
 
-    def insert_of_index(self, item: any, index: int) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
+    def insert_to_index(self, item: any, index: int) -> bool or Exception: # Сложность алгоритма O(1) / O(N) / O(N)
         """
         Вставляет элемент item на позицию index (происходит циклический сдвиг вправо)
         :param item: Пренимает элемент
@@ -127,12 +161,8 @@ class DList:
         """
         assert index >= 0 and index <= self.__size, ValueError('Данный индекс отсутствует в массиве')
 
-        if self.__count == 0:
-            self.add(item)
-            return True
-
-        if index >= self.__count:
-            self.add(item)
+        if self.__count == 0 or index >= self.__count:
+            self.add_back(item)
             return True
 
         if self.__count == self.__size:
@@ -170,7 +200,7 @@ class DList:
         for i in range(0, self.__count, 1):
             index_min = i
 
-            for j in range(i, self.__count, 1):
+            for j in range(i+1, self.__count, 1):
                 if condition(self.__array_memory[index_min], self.__array_memory[j]):
                     index_min = j
 
